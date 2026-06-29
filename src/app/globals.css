@@ -104,3 +104,63 @@ a {
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes amPulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+
+/* ---------------- Responsive / mobile ---------------- */
+body {
+  overflow-x: hidden;
+}
+
+/* show/hide helpers (the design uses inline styles, so we toggle via classes) */
+.am-mobile-only {
+  display: none;
+}
+
+@media (max-width: 880px) {
+  /* tighter page gutters on the 1240px containers */
+  [style*='max-width: 1240px'] {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* collapse every multi-column grid to a single column… */
+  [style*='grid-template-columns'] {
+    grid-template-columns: 1fr !important;
+  }
+  /* …but keep the broker-logo strip as a tidy 3-up */
+  [style*='repeat(6'] {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* allow grid children to shrink so wide content (tables) scrolls internally
+     instead of blowing out the page */
+  [style*='grid-template-columns'] > * {
+    min-width: 0 !important;
+  }
+
+  /* shrink the big gaps left behind once grids stack */
+  [style*='gap: 56px'] { gap: 28px !important; }
+  [style*='gap: 48px'] { gap: 26px !important; }
+  [style*='gap: 40px'] { gap: 24px !important; }
+
+  /* let wide flex rows (e.g. hero stats) wrap instead of overflowing */
+  [style*='display: flex'][style*='gap: 34px'] {
+    flex-wrap: wrap !important;
+    gap: 18px !important;
+  }
+
+  /* scale down oversized headings */
+  h1[style] { font-size: 34px !important; line-height: 1.14 !important; }
+  h2[style] { font-size: 24px !important; }
+
+  /* trim the tall hero padding */
+  [style*='76px 0 84px'] { padding: 44px 0 52px !important; }
+
+  /* header: hide desktop nav, reveal the mobile menu controls */
+  .am-desktop-only { display: none !important; }
+  .am-mobile-only { display: flex !important; }
+}
+
+@media (max-width: 480px) {
+  h1[style] { font-size: 28px !important; }
+  [style*='repeat(6'] { grid-template-columns: repeat(2, 1fr) !important; }
+}

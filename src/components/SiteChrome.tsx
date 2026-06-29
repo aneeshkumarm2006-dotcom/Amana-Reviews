@@ -15,6 +15,7 @@ type MenuKey = 'ratings' | 'best' | 'articles' | 'predictions' | 'services';
 export default function SiteChrome({ locale, children }: { locale: Locale; children: ReactNode }) {
   const [menu, setMenu] = useState<MenuKey | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [query, setQuery] = useState('');
   const pathname = usePathname();
   const ar = locale === 'ar';
@@ -23,7 +24,20 @@ export default function SiteChrome({ locale, children }: { locale: Locale; child
   useEffect(() => {
     setMenu(null);
     setSearchOpen(false);
+    setMobileOpen(false);
   }, [pathname]);
+
+  const mobileLinks: { label: string; to: RouteName }[] = [
+    { label: t(locale, 'All ratings', 'كل التصنيفات'), to: 'reviews' },
+    { label: t(locale, 'Best Brokers', 'أفضل الوسطاء'), to: 'reviews' },
+    { label: t(locale, 'Articles', 'المقالات'), to: 'articles' },
+    { label: t(locale, 'Predictions', 'التوقعات'), to: 'predictions' },
+    { label: t(locale, 'Portfolio Management', 'إدارة المحافظ'), to: 'portfolio' },
+    { label: t(locale, 'Free Signals', 'توصيات مجانية'), to: 'signals' },
+    { label: t(locale, 'Scam Detector', 'كاشف الاحتيال'), to: 'detector' },
+    { label: t(locale, 'Methodology', 'المنهجية'), to: 'principles' },
+    { label: t(locale, 'Contact', 'تواصل'), to: 'contact' },
+  ];
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -79,7 +93,7 @@ export default function SiteChrome({ locale, children }: { locale: Locale; child
             </span>
           </Link>
 
-          <nav style={{ display: 'flex', alignItems: 'center', gap: '2px', marginInlineStart: '6px' }}>
+          <nav className="am-desktop-only" style={{ display: 'flex', alignItems: 'center', gap: '2px', marginInlineStart: '6px' }}>
             {navItems.map((item) => (
               <button key={item.key} onMouseEnter={() => setMenu(item.key)} onClick={() => setMenu((m) => (m === item.key ? null : item.key))} className="am-menu-link" style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: 600, color: menu === item.key ? '#16A34A' : '#1A2227', padding: '9px 13px', borderRadius: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 {item.label}
@@ -92,12 +106,30 @@ export default function SiteChrome({ locale, children }: { locale: Locale; child
             <button onClick={() => { setSearchOpen(true); setQuery(''); }} aria-label="Search" style={{ width: '40px', height: '40px', borderRadius: '8px', border: '1px solid rgba(14,20,22,.14)', background: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#1A2227" strokeWidth={2} /><path d="M16.5 16.5L21 21" stroke="#1A2227" strokeWidth={2} strokeLinecap="round" /></svg>
             </button>
-            <Link href={href('detector')} className="am-btn" style={{ background: '#0E1416', color: '#fff', fontSize: '13.5px', fontWeight: 600, padding: '11px 17px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Link href={href('detector')} className="am-btn am-desktop-only" style={{ background: '#0E1416', color: '#fff', fontSize: '13.5px', fontWeight: 600, padding: '11px 17px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 2.5v5.5c0 4-2.8 7.4-7 9.5-4.2-2.1-7-5.5-7-9.5V5.5L12 3z" stroke="#16A34A" strokeWidth={2} strokeLinejoin="round" /></svg>
               {t(locale, 'Scam Detector', 'كاشف الاحتيال')}
             </Link>
+            <button className="am-mobile-only" onClick={() => setMobileOpen((v) => !v)} aria-label="Menu" style={{ width: '40px', height: '40px', borderRadius: '8px', border: '1px solid rgba(14,20,22,.14)', background: '#fff', cursor: 'pointer', alignItems: 'center', justifyContent: 'center' }}>
+              {mobileOpen ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="#1A2227" strokeWidth={2} strokeLinecap="round" /></svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="#1A2227" strokeWidth={2} strokeLinecap="round" /></svg>
+              )}
+            </button>
           </div>
         </div>
+
+        {/* MOBILE MENU */}
+        {mobileOpen && (
+          <div className="am-mobile-only" style={{ borderTop: '1px solid rgba(14,20,22,.10)', background: '#fff', animation: 'amPanel .2s ease both' }}>
+            <div style={{ padding: '8px 16px 18px', display: 'flex', flexDirection: 'column', width: '100%' }}>
+              {mobileLinks.map((l, i) => (
+                <Link key={i} href={href(l.to)} onClick={() => setMobileOpen(false)} style={{ padding: '13px 4px', fontSize: '15px', fontWeight: 600, color: '#1A2227', borderBottom: '1px solid rgba(14,20,22,.06)' }}>{l.label}</Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         {menu && (
           <div style={{ position: 'absolute', left: 0, right: 0, top: '72px', background: '#fff', borderBottom: '1px solid rgba(14,20,22,.12)', boxShadow: '0 24px 48px -24px rgba(14,20,22,.30)', animation: 'amPanel .22s ease both' }}>

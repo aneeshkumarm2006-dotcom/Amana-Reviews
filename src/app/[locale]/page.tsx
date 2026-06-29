@@ -3,6 +3,8 @@ import { href } from '@/lib/routes';
 import { setRequestLocale } from 'next-intl/server';
 import { t, loc, type Locale } from '@/lib/i18n';
 import { Wrap, Eyebrow, LinkBtn, BrokerCard, ArticleCard } from '@/components/ui';
+import CountUp from '@/components/anim/CountUp';
+import RevealOnScroll from '@/components/anim/RevealOnScroll';
 import { brokers } from '@/data/brokers';
 import { scams, scamWhy, scamVerdict } from '@/data/scams';
 import { articles } from '@/data/articles';
@@ -42,6 +44,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
 
   return (
     <div>
+      <RevealOnScroll />
       {/* HERO */}
       <section style={{ background: '#0E1416', color: '#fff', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px)', backgroundSize: '48px 48px', maskImage: 'radial-gradient(ellipse 70% 80% at 70% 30%,#000,transparent)' }} />
@@ -65,9 +68,9 @@ export default function HomePage({ params }: { params: { locale: string } }) {
                 <LinkBtn label={t(locale, 'Check a broker for scams', 'افحص وسيطًا')} to="detector" variant="light" />
               </div>
               <div style={{ display: 'flex', gap: '34px', marginTop: '44px', paddingTop: '30px', borderTop: '1px solid rgba(255,255,255,.12)' }}>
-                {stats.map((s) => (
+                {stats.map((s, i) => (
                   <div key={s[1]}>
-                    <div style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '30px', fontWeight: 600, color: '#fff' }}>{s[0]}</div>
+                    <div style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '30px', fontWeight: 600, color: '#fff' }}><CountUp value={s[0]} delayMs={i * 90} /></div>
                     <div style={{ fontSize: '12px', color: '#8A949A', marginTop: '2px' }}>{s[1]}</div>
                   </div>
                 ))}
@@ -90,7 +93,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
                         <span style={{ display: 'block', fontSize: '14px', fontWeight: 600, color: '#0E1416' }}>{b.name}</span>
                         <span style={{ display: 'block', fontSize: '11.5px', color: '#5A6670' }}>{b.regLabel}</span>
                       </span>
-                      <span style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '14px', fontWeight: 600, color: b.tone.hex }}>{b.scoreStr}</span>
+                      <span style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '14px', fontWeight: 600, color: b.tone.hex }}><CountUp value={b.scoreStr} delayMs={i * 90} /></span>
                     </Link>
                   ))}
                 </div>
@@ -257,7 +260,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
               {pillars.map((p) => (
                 <div key={p[0]} style={{ background: '#fff', border: '1px solid rgba(14,20,22,.08)', borderRadius: '12px', padding: '16px 18px' }}>
-                  <div style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '22px', fontWeight: 600, color: '#16A34A' }}>{p[1]}</div>
+                  <div style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '22px', fontWeight: 600, color: '#16A34A' }}><CountUp value={p[1]} /></div>
                   <div style={{ fontSize: '13px', color: '#42505A', marginTop: '3px' }}>{p[0]}</div>
                 </div>
               ))}

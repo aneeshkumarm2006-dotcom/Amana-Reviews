@@ -5,7 +5,7 @@ import { t, loc, type Locale } from '@/lib/i18n';
 import { Wrap, Eyebrow, LinkBtn, BrokerCard, ArticleCard } from '@/components/ui';
 import CountUp from '@/components/anim/CountUp';
 import RevealOnScroll from '@/components/anim/RevealOnScroll';
-import { PARTNERS } from '@/data/partners';
+import { PARTNERS, logoUrl } from '@/data/partners';
 import { brokers } from '@/data/brokers';
 import { scams, scamWhy, scamVerdict } from '@/data/scams';
 import { articles } from '@/data/articles';
@@ -131,7 +131,10 @@ export default function HomePage({ params }: { params: { locale: string } }) {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6,1fr)', gap: '14px' }}>
             {PARTNERS.map((p) => (
               <a key={p.name} href={p.url} target="_blank" rel="sponsored noopener noreferrer" className="am-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', background: '#fff', border: '1px solid rgba(14,20,22,.10)', borderRadius: '14px', padding: '22px 14px', textAlign: 'center' }}>
-                <span style={{ width: '52px', height: '52px', borderRadius: '12px', background: p.bg, color: p.fg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '14px', fontFamily: "'IBM Plex Mono',monospace", flex: 'none' }}>{p.mark}</span>
+                <span style={{ width: '64px', height: '64px', borderRadius: '14px', background: '#fff', border: '1px solid rgba(14,20,22,.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 'none', overflow: 'hidden' }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={logoUrl(p.domain)} alt={`${p.name} logo`} width={44} height={44} loading="lazy" style={{ maxWidth: '44px', maxHeight: '44px', objectFit: 'contain' }} />
+                </span>
                 <span style={{ fontSize: '14px', fontWeight: 600, color: '#0E1416' }}>{p.name}</span>
                 <span style={{ fontSize: '12px', color: '#16A34A', fontWeight: 600 }}>{t(locale, 'Visit site →', 'زيارة الموقع →')}</span>
               </a>

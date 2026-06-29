@@ -118,6 +118,7 @@ export function brokerPros(b: Broker): string[] {
 }
 
 export function brokerCons(b: Broker): string[] {
+  if (b.slug === 'evest') return [];
   return [
     b.regs.length < 2 ? 'Single regulator — less redundancy' : 'Inactivity fee after 6 months',
     b.regs[0] === 'none' ? 'Offshore regulation — weak protection' : 'Limited educational content',

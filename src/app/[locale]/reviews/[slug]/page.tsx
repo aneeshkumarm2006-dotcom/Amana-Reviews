@@ -118,9 +118,9 @@ export default function ReviewPage({ params }: { params: { locale: string; slug:
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 330px', gap: '48px', alignItems: 'start' }}>
             {/* MAIN */}
             <div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '40px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: cons.length ? '1fr 1fr' : '1fr', gap: '16px', marginBottom: '40px' }}>
                 <ProConCard title={t(locale, 'PROS', 'المزايا')} items={pros} good />
-                <ProConCard title={t(locale, 'CONS', 'العيوب')} items={cons} good={false} />
+                {cons.length > 0 && <ProConCard title={t(locale, 'CONS', 'العيوب')} items={cons} good={false} />}
               </div>
               {secs.map((s, i) => (
                 <div key={i} style={{ marginBottom: '30px' }}>

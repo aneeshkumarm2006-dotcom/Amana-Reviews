@@ -67,7 +67,7 @@ export default function SiteChrome({ locale, children }: { locale: Locale; child
       </div>
 
       {/* HEADER */}
-      <header style={{ position: 'sticky', top: 0, zIndex: 60, background: 'rgba(251,250,247,.92)', backdropFilter: 'saturate(1.4) blur(10px)', borderBottom: '1px solid rgba(14,20,22,.10)' }}>
+      <header onMouseLeave={() => setMenu(null)} style={{ position: 'sticky', top: 0, zIndex: 60, background: 'rgba(251,250,247,.92)', backdropFilter: 'saturate(1.4) blur(10px)', borderBottom: '1px solid rgba(14,20,22,.10)' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 28px', height: '72px', display: 'flex', alignItems: 'center', gap: '30px' }}>
           <Link href={href('home')} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <span style={{ width: '30px', height: '30px', borderRadius: '6px', background: '#0E1416', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 'none' }}>
@@ -81,7 +81,7 @@ export default function SiteChrome({ locale, children }: { locale: Locale; child
 
           <nav style={{ display: 'flex', alignItems: 'center', gap: '2px', marginInlineStart: '6px' }}>
             {navItems.map((item) => (
-              <button key={item.key} onClick={() => setMenu((m) => (m === item.key ? null : item.key))} className="am-menu-link" style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: 600, color: '#1A2227', padding: '9px 13px', borderRadius: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <button key={item.key} onMouseEnter={() => setMenu(item.key)} onClick={() => setMenu((m) => (m === item.key ? null : item.key))} className="am-menu-link" style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: 600, color: menu === item.key ? '#16A34A' : '#1A2227', padding: '9px 13px', borderRadius: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 {item.label}
                 <span style={{ fontSize: '9px', opacity: 0.5, marginTop: '1px' }}>▾</span>
               </button>

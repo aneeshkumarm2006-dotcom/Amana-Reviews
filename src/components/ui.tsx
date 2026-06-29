@@ -4,6 +4,7 @@ import { href, type RouteName } from '@/lib/routes';
 import { t, loc, type Locale } from '@/lib/i18n';
 import type { Broker } from '@/data/brokers';
 import { authorBySlug } from '@/data/authors';
+import { logoUrl } from '@/data/partners';
 
 export const WRAP = '1240px';
 
@@ -62,6 +63,23 @@ export function LinkBtn({
   );
 }
 
+/** Broker logo tile: real favicon-based logo when the broker has a `domain`, else a monogram. */
+export function BrokerLogo({ broker, size = 46, radius }: { broker: Broker; size?: number; radius?: number }) {
+  const r = radius ?? Math.round(size * 0.22);
+  if (broker.domain) {
+    const inner = Math.round(size * 0.68);
+    return (
+      <span style={{ width: size, height: size, borderRadius: r, background: '#fff', border: '1px solid rgba(14,20,22,.10)', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 'none', overflow: 'hidden' }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={logoUrl(broker.domain)} alt={`${broker.name} logo`} width={inner} height={inner} loading="lazy" style={{ maxWidth: inner, maxHeight: inner, objectFit: 'contain' }} />
+      </span>
+    );
+  }
+  return (
+    <span style={{ width: size, height: size, borderRadius: r, background: '#0E1416', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'IBM Plex Mono',monospace", fontWeight: 600, fontSize: Math.round(size * 0.32), flex: 'none' }}>{broker.logo}</span>
+  );
+}
+
 export function Badge({ b, size = 62 }: { b: Broker; size?: number }) {
   const sz = size;
   const r = (sz - 7) / 2;
@@ -99,7 +117,7 @@ export function BrokerCard({ b, locale }: { b: Broker; locale: Locale }) {
       <Link href={href('review', b.slug)} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
-            <span style={{ width: '46px', height: '46px', borderRadius: '10px', background: '#0E1416', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'IBM Plex Mono',monospace", fontWeight: 600, fontSize: '15px', flex: 'none' }}>{b.logo}</span>
+            <BrokerLogo broker={b} size={46} radius={10} />
             <div style={{ minWidth: 0 }}>
               <div style={{ fontWeight: 700, fontSize: '16px', color: '#0E1416', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{b.name}</div>
               <div style={{ fontSize: '12.5px', color: '#5A6670', marginTop: '2px' }}>{b.regLabel}</div>

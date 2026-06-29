@@ -17,10 +17,12 @@ export interface BrokerRaw {
   cats: string[];
   blurb: string;
   blurbAr: string;
+  /** Real domain — when set, the broker shows its real logo instead of a monogram. */
+  domain?: string;
 }
 
 export const BROKERS_RAW: BrokerRaw[] = [
-  { slug: 'evest', name: 'Evest', score: 4.8, regs: ['CySEC', 'FSA'], min: 50, spread: 0.7, islamic: true, platforms: ['MT5', 'Evest App'], founded: 2020, hq: 'Dubai, UAE', hqAr: 'دبي، الإمارات', countries: ['saudi-arabia', 'uae', 'egypt', 'kuwait'], cats: ['islamic', 'best-apps', 'no-capital', 'low-spread'], blurb: 'A fast-growing, multi-asset broker popular across the Arab world, with a low entry point and a polished, beginner-friendly mobile app.', blurbAr: 'وسيط متعدد الأصول سريع النمو ومنتشر في العالم العربي، بحد دخول منخفض وتطبيق محمول أنيق ومناسب للمبتدئين.' },
+  { slug: 'evest', name: 'Evest', score: 4.8, regs: ['CySEC', 'FSA'], min: 50, spread: 0.7, islamic: true, platforms: ['MT5', 'Evest App'], founded: 2020, hq: 'Dubai, UAE', hqAr: 'دبي، الإمارات', countries: ['saudi-arabia', 'uae', 'egypt', 'kuwait'], cats: ['islamic', 'best-apps', 'no-capital', 'low-spread'], blurb: 'A fast-growing, multi-asset broker popular across the Arab world, with a low entry point and a polished, beginner-friendly mobile app.', blurbAr: 'وسيط متعدد الأصول سريع النمو ومنتشر في العالم العربي، بحد دخول منخفض وتطبيق محمول أنيق ومناسب للمبتدئين.', domain: 'evest.com' },
   { slug: 'northcap', name: 'NorthCap Markets', score: 4.7, regs: ['FCA', 'CySEC', 'SCA'], min: 100, spread: 0.6, islamic: true, platforms: ['MT4', 'MT5', 'NorthCap App'], founded: 2009, hq: 'London, UK', hqAr: 'لندن، المملكة المتحدة', countries: ['saudi-arabia', 'uae', 'uk', 'europe'], cats: ['low-spread', 'islamic', 'metatrader', 'best-apps'], blurb: 'A heavyweight, multi-regulated broker with razor-thin spreads and a genuinely good mobile app.', blurbAr: 'وسيط ثقيل الوزن متعدد التراخيص، بسبريد بالغ الانخفاض وتطبيق محمول ممتاز فعلاً.' },
   { slug: 'equiti-prime', name: 'Equiti Prime', score: 4.5, regs: ['DFSA', 'SCA', 'CySEC'], min: 50, spread: 0.8, islamic: true, platforms: ['MT4', 'MT5'], founded: 2014, hq: 'Dubai, UAE', hqAr: 'دبي، الإمارات', countries: ['uae', 'saudi-arabia', 'jordan', 'kuwait'], cats: ['islamic', 'no-capital', 'metatrader'], blurb: 'The strongest pick for GCC traders who want local DFSA/SCA oversight and swap-free accounts.', blurbAr: 'الخيار الأقوى لمتداولي الخليج الباحثين عن رقابة محلية من DFSA/SCA وحسابات بدون فوائد مبيت.' },
   { slug: 'gulfstone', name: 'GulfStone Markets', score: 4.4, regs: ['CySEC', 'SCA'], min: 200, spread: 0.9, islamic: true, platforms: ['MT5', 'GulfStone Web'], founded: 2012, hq: 'Limassol, Cyprus', hqAr: 'ليماسول، قبرص', countries: ['saudi-arabia', 'qatar', 'bahrain', 'egypt'], cats: ['gold', 'commodities', 'islamic'], blurb: 'Specialists in gold and commodities with deep liquidity and reliable execution.', blurbAr: 'متخصصون في الذهب والسلع بسيولة عميقة وتنفيذ موثوق.' },
@@ -48,7 +50,6 @@ export interface Broker extends BrokerRaw {
   minStr: string;
   spreadStr: string;
   islamicStr: string;
-  hqLoc: string;
   rank: number;
 }
 
@@ -71,7 +72,6 @@ export function brokers(locale: Locale): Broker[] {
     minStr: '$' + x.min.toLocaleString('en-US'),
     spreadStr: x.spread.toFixed(1) + (ar ? ' نقطة' : ' pips'),
     islamicStr: x.islamic ? (ar ? 'نعم — بدون فوائد مبيت' : 'Yes — swap-free') : (ar ? 'لا' : 'No'),
-    hqLoc: ar ? x.hqAr || x.hq : x.hq,
     rank: i + 1,
   }));
 }
@@ -97,7 +97,7 @@ export function affiliateUrl(slug: string): string {
 
 export function reviewSections(b: Broker): [string, string][] {
   return [
-    ['Overview', `${b.name} is a ${b.regs[0] === 'none' ? 'offshore' : 'regulated'} broker founded in ${b.founded} and headquartered in ${b.hq}. ${b.blurb} Our analysts opened a live account, deposited funds, placed trades across asset classes and tested a full withdrawal cycle before scoring.`],
+    ['Overview', `${b.name} is a ${b.regs[0] === 'none' ? 'offshore' : 'regulated'} broker founded in ${b.founded}. ${b.blurb} Our analysts opened a live account, deposited funds, placed trades across asset classes and tested a full withdrawal cycle before scoring.`],
     ['Commissions & spreads', `Spreads on the standard account start from ${b.spread.toFixed(1)} pips on EUR/USD. There are no deposit fees; inactivity and withdrawal fees are clearly disclosed. Overall costs land ${b.score >= 4.2 ? 'well below' : 'around'} the industry median.`],
     ['Security & regulation', `${b.name} is overseen by ${b.regs.map((r) => REG[r]).join(', ')}. ${b.regs[0] === 'none' ? 'Client funds are not held under a tier-1 regulator, which materially weakens protection.' : 'Client funds are held in segregated accounts and negative-balance protection applies.'}`],
     ['Deposits & withdrawals', `Funding is available via bank transfer, cards and local e-wallets. In our test, a withdrawal request was processed in ${b.score >= 4 ? 'under 24 hours' : '2–4 business days'} with no unexpected fees.`],

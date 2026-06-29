@@ -6,7 +6,7 @@ import { href } from '@/lib/routes';
 import { t, loc, type Locale } from '@/lib/i18n';
 import { routing } from '@/i18n/routing';
 import { brokers, brokerBySlug, reviewSections, brokerPros, brokerCons, brokerFaqs, BROKERS_RAW } from '@/data/brokers';
-import { Wrap, Crumb, Badge, VerifiedTag, Disclosure } from '@/components/ui';
+import { Wrap, Crumb, Badge, VerifiedTag, Disclosure, BrokerLogo } from '@/components/ui';
 import { KeyFacts, Byline, H2 } from '@/components/blocks';
 import Faq from '@/components/Faq';
 import CommentForm from '@/components/CommentForm';
@@ -85,7 +85,7 @@ export default function ReviewPage({ params }: { params: { locale: string; slug:
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '32px', alignItems: 'center' }}>
               <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-                <span style={{ width: '70px', height: '70px', borderRadius: '15px', background: '#0E1416', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'IBM Plex Mono',monospace", fontWeight: 600, fontSize: '24px', flex: 'none' }}>{b.logo}</span>
+                <BrokerLogo broker={b} size={70} radius={15} />
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
                     <h1 className="keep-serif" style={{ fontFamily: "'Newsreader',serif", fontWeight: 500, fontSize: '40px', letterSpacing: '-.015em', margin: 0, color: '#0E1416' }}>{t(locale, b.name + ' review', 'مراجعة ' + b.name)}</h1>
@@ -172,7 +172,7 @@ export default function ReviewPage({ params }: { params: { locale: string; slug:
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   {related.map((rb) => (
                     <Link key={rb.slug} href={href('review', rb.slug)} style={{ display: 'flex', alignItems: 'center', gap: '11px' }}>
-                      <span style={{ width: '34px', height: '34px', borderRadius: '8px', background: '#0E1416', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 600, fontFamily: "'IBM Plex Mono',monospace", flex: 'none' }}>{rb.logo}</span>
+                      <BrokerLogo broker={rb} size={34} radius={8} />
                       <span style={{ flex: 1, minWidth: 0 }}>
                         <span style={{ display: 'block', fontSize: '13.5px', fontWeight: 600, color: '#0E1416' }}>{rb.name}</span>
                         <span style={{ display: 'block', fontSize: '11.5px', color: '#5A6670' }}>{rb.regLabel}</span>

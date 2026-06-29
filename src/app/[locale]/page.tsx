@@ -2,7 +2,7 @@ import { Link } from '@/i18n/routing';
 import { href } from '@/lib/routes';
 import { setRequestLocale } from 'next-intl/server';
 import { t, loc, type Locale } from '@/lib/i18n';
-import { Wrap, Eyebrow, LinkBtn, BrokerCard, ArticleCard } from '@/components/ui';
+import { Wrap, Eyebrow, LinkBtn, BrokerCard, ArticleCard, BrokerLogo } from '@/components/ui';
 import CountUp from '@/components/anim/CountUp';
 import RevealOnScroll from '@/components/anim/RevealOnScroll';
 import { PARTNERS, logoUrl } from '@/data/partners';
@@ -89,7 +89,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
                   {bs.slice(0, 4).map((b, i) => (
                     <Link key={b.slug} href={href('review', b.slug)} className="am-row" style={{ display: 'flex', alignItems: 'center', gap: '13px', padding: '11px 10px', borderRadius: '10px', background: i === 0 ? 'rgba(22,163,74,.06)' : 'transparent' }}>
                       <span style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '13px', color: '#9BA4AA', width: '16px' }}>{'0' + (i + 1)}</span>
-                      <span style={{ width: '38px', height: '38px', borderRadius: '9px', background: '#0E1416', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'IBM Plex Mono',monospace", fontSize: '13px', fontWeight: 600, flex: 'none' }}>{b.logo}</span>
+                      <BrokerLogo broker={b} size={38} radius={9} />
                       <span style={{ flex: 1, minWidth: 0 }}>
                         <span style={{ display: 'block', fontSize: '14px', fontWeight: 600, color: '#0E1416' }}>{b.name}</span>
                         <span style={{ display: 'block', fontSize: '11.5px', color: '#5A6670' }}>{b.regLabel}</span>

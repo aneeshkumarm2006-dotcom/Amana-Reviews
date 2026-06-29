@@ -5,7 +5,7 @@ import { t, loc, type Locale } from '@/lib/i18n';
 import { AUTHORS } from '@/data/authors';
 import type { Broker } from '@/data/brokers';
 import Faq from './Faq';
-import { Wrap, Eyebrow, Crumb, type CrumbItem } from './ui';
+import { Wrap, Eyebrow, Crumb, BrokerLogo, type CrumbItem } from './ui';
 
 export function H2({ children }: { children: ReactNode }) {
   return (
@@ -41,7 +41,6 @@ export function KeyFacts({ b, locale }: { b: Broker; locale: Locale }) {
     [t(locale, 'Spread from', 'السبريد من'), b.spreadStr],
     [t(locale, 'Islamic account', 'حساب إسلامي'), b.islamicStr],
     [t(locale, 'Platforms', 'المنصات'), b.platforms.join(', ')],
-    [t(locale, 'Headquarters', 'المقر'), b.hqLoc],
     [t(locale, 'Founded', 'تأسست'), String(b.founded)],
   ];
   return (
@@ -84,7 +83,7 @@ export function CompareTable({ list, locale }: { list: Broker[]; locale: Locale 
               <td style={{ ...td, fontFamily: "'IBM Plex Mono',monospace", color: '#9BA4AA' }}>{i + 1}</td>
               <td style={td}>
                 <Link href={href('review', b.slug)} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <span style={{ width: '28px', height: '28px', borderRadius: '6px', background: '#0E1416', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 600, fontFamily: "'IBM Plex Mono',monospace" }}>{b.logo}</span>
+                  <BrokerLogo broker={b} size={28} radius={6} />
                   <span style={{ fontWeight: 600 }}>{b.name}</span>
                 </Link>
               </td>
@@ -165,7 +164,7 @@ export function Ranking({ locale, crumbs, eyebrow, title, sub, intro, list, faqs
               <div style={{ marginTop: '20px', padding: '16px', background: '#0E1416', borderRadius: '12px' }}>
                 <div style={{ fontSize: '12px', color: '#9BA4AA', marginBottom: '8px' }}>{t(locale, 'Editor’s pick', 'اختيار المحرّر')}</div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-                  <span style={{ width: '34px', height: '34px', borderRadius: '8px', background: '#16A34A', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontFamily: "'IBM Plex Mono',monospace", fontSize: '12px' }}>{list[0].logo}</span>
+                  <BrokerLogo broker={list[0]} size={34} radius={8} />
                   <span style={{ color: '#fff', fontSize: '14px', fontWeight: 600 }}>{list[0].name}</span>
                 </div>
                 <Link href={href('review', list[0].slug)} style={{ display: 'block', textAlign: 'center', background: '#16A34A', color: '#fff', borderRadius: '8px', padding: '10px', fontSize: '13px', fontWeight: 600 }}>{t(locale, 'See review', 'شاهد المراجعة')}</Link>
@@ -185,7 +184,7 @@ export function Ranking({ locale, crumbs, eyebrow, title, sub, intro, list, faqs
                     <div style={{ display: 'flex', gap: '18px', alignItems: 'flex-start' }}>
                       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', flex: 'none' }}>
                         <span style={{ fontFamily: "'IBM Plex Mono',monospace", fontSize: '13px', color: '#9BA4AA', fontWeight: 600 }}>{'#' + (i + 1)}</span>
-                        <span style={{ width: '52px', height: '52px', borderRadius: '12px', background: '#0E1416', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'IBM Plex Mono',monospace", fontWeight: 600, fontSize: '17px' }}>{b.logo}</span>
+                        <BrokerLogo broker={b} size={52} radius={12} />
                       </div>
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '4px' }}>

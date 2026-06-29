@@ -1,24 +1,18 @@
 import type { Locale } from '@/lib/i18n';
 
-/** Regulator code → label (EN / AR). */
+/** Regulator code → label (location-free). */
 export const REG: Record<string, string> = {
-  FCA: 'FCA · UK',
-  CySEC: 'CySEC · Cyprus',
-  DFSA: 'DFSA · Dubai',
-  SCA: 'SCA · UAE',
-  ASIC: 'ASIC · Australia',
-  FSA: 'FSA · Seychelles',
-  none: 'Offshore / none',
+  FCA: 'FCA',
+  CySEC: 'CySEC',
+  DFSA: 'DFSA',
+  SCA: 'SCA',
+  ASIC: 'ASIC',
+  FSA: 'FSA',
+  none: 'Offshore',
 };
 
 const REG_AR: Record<string, string> = {
-  'FCA · UK': 'FCA · المملكة المتحدة',
-  'CySEC · Cyprus': 'CySEC · قبرص',
-  'DFSA · Dubai': 'DFSA · دبي',
-  'SCA · UAE': 'SCA · الإمارات',
-  'ASIC · Australia': 'ASIC · أستراليا',
-  'FSA · Seychelles': 'FSA · سيشل',
-  'Offshore / none': 'خارجي / بدون',
+  Offshore: 'خارجي',
 };
 
 export function regLabel(locale: Locale, code: string): string {

@@ -4,7 +4,7 @@ import { href } from '@/lib/routes';
 import { t, loc, type Locale } from '@/lib/i18n';
 import { AUTHORS, authorBySlug } from '@/data/authors';
 import { brokers } from '@/data/brokers';
-import { Wrap, Crumb, type CrumbItem } from './ui';
+import { Wrap, Crumb, BrokerLogo, type CrumbItem } from './ui';
 import { H2, Byline } from './blocks';
 import Faq from './Faq';
 
@@ -76,7 +76,7 @@ export default function ArticleScaffold({ locale, crumbs, tag, title, date, read
               ))}
 
               <div style={{ background: '#0E1416', borderRadius: '16px', padding: '24px', display: 'flex', alignItems: 'center', gap: '18px', margin: '10px 0 36px', flexWrap: 'wrap' }}>
-                <span style={{ width: '48px', height: '48px', borderRadius: '11px', background: '#16A34A', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'IBM Plex Mono',monospace", fontWeight: 600, fontSize: '15px', flex: 'none' }}>{recBroker.logo}</span>
+                <BrokerLogo broker={recBroker} size={48} radius={11} />
                 <div style={{ flex: 1, minWidth: '180px' }}>
                   <div style={{ color: '#9BA4AA', fontSize: '12px' }}>{t(locale, 'Editor’s recommended broker', 'الوسيط الموصى به من المحرّر')}</div>
                   <div style={{ color: '#fff', fontSize: '17px', fontWeight: 700 }}>{recBroker.name + ' · ' + recBroker.scoreStr + '/5'}</div>

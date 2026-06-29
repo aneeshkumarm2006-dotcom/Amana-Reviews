@@ -9,6 +9,7 @@ import { scams } from '@/data/scams';
 import { articles } from '@/data/articles';
 import { predictions } from '@/data/predictions';
 import { COUNTRIES, CATEGORIES, countryName } from '@/data/taxonomy';
+import { BrokerLogo } from './ui';
 
 type MenuKey = 'ratings' | 'best' | 'articles' | 'predictions' | 'services';
 
@@ -193,7 +194,7 @@ function MegaPanel({ which, locale, onNav }: { which: MenuKey; locale: Locale; o
         </div>
         {feat.map((b) => (
           <Link key={b.slug} href={href('review', b.slug)} onClick={onNav} className="am-row" style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '9px 10px', borderRadius: '8px' }}>
-            <span style={{ width: '34px', height: '34px', borderRadius: '7px', background: '#0E1416', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 700, fontFamily: "'IBM Plex Mono',monospace", flex: 'none' }}>{b.logo}</span>
+            <BrokerLogo broker={b} size={34} radius={7} />
             <span style={{ flex: 1, minWidth: 0 }}>
               <span style={{ display: 'block', fontSize: '14px', fontWeight: 600, color: '#1A2227' }}>{b.name}</span>
               <span style={{ display: 'block', fontSize: '12px', color: '#5A6670' }}>{b.regLabel}</span>

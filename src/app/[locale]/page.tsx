@@ -5,6 +5,7 @@ import { t, loc, type Locale } from '@/lib/i18n';
 import { Wrap, Eyebrow, LinkBtn, BrokerCard, ArticleCard } from '@/components/ui';
 import CountUp from '@/components/anim/CountUp';
 import RevealOnScroll from '@/components/anim/RevealOnScroll';
+import { PARTNERS } from '@/data/partners';
 import { brokers } from '@/data/brokers';
 import { scams, scamWhy, scamVerdict } from '@/data/scams';
 import { articles } from '@/data/articles';
@@ -118,6 +119,25 @@ export default function HomePage({ params }: { params: { locale: string } }) {
             </div>
           </Wrap>
         </div>
+      </section>
+
+      {/* FEATURED LICENSED BROKERS (real, externally linked) */}
+      <section style={{ padding: '64px 0 8px' }}>
+        <Wrap>
+          <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}><Eyebrow label={t(locale, 'GLOBALLY LICENSED', 'مرخّصة عالميًا')} /></div>
+            <h2 className="keep-serif" style={{ fontFamily: "'Newsreader',serif", fontWeight: 500, fontSize: '34px', letterSpacing: '-.01em', margin: '14px 0 0', color: '#0E1416' }}>{t(locale, 'The best globally licensed trading companies, at your fingertips', 'أفضل شركات التداول المرخّصة عالميًا بين يديك')}</h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6,1fr)', gap: '14px' }}>
+            {PARTNERS.map((p) => (
+              <a key={p.name} href={p.url} target="_blank" rel="sponsored noopener noreferrer" className="am-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', background: '#fff', border: '1px solid rgba(14,20,22,.10)', borderRadius: '14px', padding: '22px 14px', textAlign: 'center' }}>
+                <span style={{ width: '52px', height: '52px', borderRadius: '12px', background: p.bg, color: p.fg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '14px', fontFamily: "'IBM Plex Mono',monospace", flex: 'none' }}>{p.mark}</span>
+                <span style={{ fontSize: '14px', fontWeight: 600, color: '#0E1416' }}>{p.name}</span>
+                <span style={{ fontSize: '12px', color: '#16A34A', fontWeight: 600 }}>{t(locale, 'Visit site →', 'زيارة الموقع →')}</span>
+              </a>
+            ))}
+          </div>
+        </Wrap>
       </section>
 
       {/* PORTFOLIO BANNER */}
